@@ -8,7 +8,7 @@ This deployment:
 * Uses [DockerSpawner](https://github.com/jupyter/dockerspawner) to spawn single-user Jupyter Notebook servers in separate Docker containers on the same host
 * Persists JupyterHub data in a Docker volume on the host
 * Persists user notebook directories in Docker volumes on the host
-* Uses [OAuthenticator](https://github.com/jupyter/oauthenticator) and [GitHub OAuth](https://developer.github.com/v3/oauth/) to authenticate users
+* Uses [OAuthenticator](https://github.com/jupyter/oauthenticator) and [Google OAuth](https://developers.google.com/identity/protocols/OAuth2) to authenticate users
 
 ![JupyterHub single host Docker deployment](internal/jupyterhub-docker.png)
 
