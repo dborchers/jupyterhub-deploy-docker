@@ -1,4 +1,4 @@
-# Diego's jupyterhub-deploy-docker version
+# Tola jupyterhub-deploy-docker version
 This is the jupyterhub-deploy-docker repo with some small tweaks.
 * Google OAuth instead of GitHub Auth
 * Enabled HTTP to HTTPS redirecton
