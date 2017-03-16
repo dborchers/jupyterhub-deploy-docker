@@ -1,3 +1,8 @@
+# Diego's jupyterhub-deploy-docker version
+This is the jupyterhub-deploy-docker repo with some small tweaks.
+* Google OAuth instead of GitHub Auth
+* Enabled HTTP to HTTPS redirecton
+
 # jupyterhub-deploy-docker
 
 This repository provides a reference deployment of [JupyterHub](https://github.com/jupyter/jupyterhub), a multi-user [Jupyter Notebook](http://jupyter.org/) environment, on a **single host** using [Docker](https://docs.docker.com).  
