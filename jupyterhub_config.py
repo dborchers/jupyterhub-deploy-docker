@@ -35,12 +35,15 @@ notebook_dir = os.environ.get('DOCKER_NOTEBOOK_DIR') or '/home/jovyan/work'
 c.DockerSpawner.notebook_dir = notebook_dir
 # Mount the real user's Docker volume on the host to the notebook user's
 # notebook directory in the container
-c.DockerSpawner.volumes = { 'jupyterhub-user-{username}': notebook_dir }
+c.DockerSpawner.volumes = { '/var/lib/docker/volumes/jupyterhub-user-{username}': notebook_dir }
 c.DockerSpawner.extra_create_kwargs.update({ 'volume_driver': 'local' })
 # Remove containers once they are stopped
 c.DockerSpawner.remove_containers = True
 # For debugging arguments passed to spawned containers
 c.DockerSpawner.debug = True
+
+#http to https redirection
+c.JupyterHub.proxy_cmd = ['configurable-http-proxy', '--redirect-port', '80']
 
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = 'jupyterhub'
@@ -52,12 +55,12 @@ c.JupyterHub.ssl_key = os.environ['SSL_KEY']
 c.JupyterHub.ssl_cert = os.environ['SSL_CERT']
 
 # Authenticate users with GitHub OAuth
-c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+c.JupyterHub.authenticator_class = 'oauthenticator.GoogleOAuthenticator'
 c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
 
 # Persist hub data on volume mounted inside container
 data_dir = os.environ.get('DATA_VOLUME_CONTAINER', '/data')
-c.JupyterHub.db_url = os.path.join('sqlite:///', data_dir, 'jupyterhub.sqlite')
+c.JupyterHub.db_url = '/srv/jupyterhub/jupyterhub.sqlite'
 c.JupyterHub.cookie_secret_file = os.path.join(data_dir,
     'jupyterhub_cookie_secret')
 
@@ -65,13 +68,13 @@ c.JupyterHub.cookie_secret_file = os.path.join(data_dir,
 c.Authenticator.whitelist = whitelist = set()
 c.Authenticator.admin_users = admin = set()
 c.JupyterHub.admin_access = True
-pwd = os.path.dirname(__file__)
-with open(os.path.join(pwd, 'userlist')) as f:
-    for line in f:
-        if not line:
-            continue
-        parts = line.split()
-        name = parts[0]
-        whitelist.add(name)
-        if len(parts) > 1 and parts[1] == 'admin':
-            admin.add(name)
+#pwd = os.path.dirname(__file__)
+#with open(os.path.join(pwd, 'userlist')) as f:
+#    for line in f:
+#        if not line:
+#            continue
+#        parts = line.split()
+#        name = parts[0]
+#        whitelist.add(name)
+#        if len(parts) > 1 and parts[1] == 'admin':
+#            admin.add(name)
